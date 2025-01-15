@@ -1,0 +1,20 @@
+package br.com.oracle.courseForum.domain.topic.validations;
+
+import br.com.oracle.courseForum.domain.topic.TopicCreationDTO;
+import br.com.oracle.courseForum.domain.user.UserRepository;
+import br.com.oracle.courseForum.infra.exception.ValidationInput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ValidationAuthorExists implements ValidationTopicCreation {
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public void validate(TopicCreationDTO topicData) throws ValidationInput {
+        if(!userRepository.existsById(topicData.userId())){
+            throw new ValidationInput("Id do paciente informado não existe!");
+        }
+    }
+}

@@ -34,3 +34,4 @@ build/
 
 ### Dev ###
 src/main/resources/application.properties
+src/main/java/br/com/oracle/courseForum/infra/security/Secret.java

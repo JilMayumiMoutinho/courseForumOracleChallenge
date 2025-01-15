@@ -2,11 +2,11 @@
 
 A ForumHub API é uma aplicação desenvolvida em Spring Boot que oferece funcionalidades de gerenciamento de tópicos em um fórum online. Os usuários podem criar, visualizar, atualizar e excluir tópicos, além de autenticar-se para acessar as funcionalidades protegidas da API. 
 
-Projeto desenlvido para o curso: "Praticando Spring Framework: Challenge Fórum Hub" - Back End Turma 06 do ONE - Oracle Next Education & Alura
+Projeto desenlvido para o curso: "Praticando Spring Framework: Challenge Fórum Hub" - Back End do ONE - Oracle Next Education & Alura
 
 ## Tecnologias Utilizadas
 
-- Java 17
+- Java 21
 - Spring Boot 3
 - Maven
 - MySQL
@@ -19,7 +19,7 @@ Projeto desenlvido para o curso: "Praticando Spring Framework: Challenge Fórum 
 
 ## Pré-requisitos
 
-- JDK 17 instalado
+- JDK 21 instalado
 - IDE Java (como NetBeans, Eclipse ou IntelliJ IDEA)
 
 ## Gerar a chave pública e privada do token JWT
@@ -39,8 +39,8 @@ Projeto desenlvido para o curso: "Praticando Spring Framework: Challenge Fórum 
 
 ## Endpoints Principais
 
-- `/topicos`: Endpoint para operações CRUD de tópicos.
-- `/login`: Endpoint para autenticar usuários e obter token JWT.
+- `/topics`: Endpoint para operações CRUD de tópicos.
+- `/users`: Endpoint para criar e autenticar usuários através de token JWT.
 - `/swagger-ui.html`: Interface gráfica do Swagger para visualizar e testar os endpoints da API.
 
 ## Como Executar

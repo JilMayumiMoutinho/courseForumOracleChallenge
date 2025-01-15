@@ -2,7 +2,7 @@ create table users (
     id bigint not null auto_increment,
     name varchar(100) not null,
     email varchar(100) not null unique,
-    password varchar(6) not null,
+    password varchar(100) not null,
     admin boolean default false,
 
     primary key(id)
@@ -18,7 +18,7 @@ create table courses (
 
 create table topics (
     id bigint not null auto_increment,
-    title varchar(100) not null,
+    title varchar(100) not null unique,
     message varchar(300) not null unique,
     creation_date datetime not null,
     status boolean default true,
