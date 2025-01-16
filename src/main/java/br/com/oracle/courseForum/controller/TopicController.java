@@ -1,6 +1,5 @@
 package br.com.oracle.courseForum.controller;
 
-import br.com.oracle.courseForum.domain.comment.CommentDetails;
 import br.com.oracle.courseForum.domain.comment.CommentRepository;
 import br.com.oracle.courseForum.domain.topic.*;
 import jakarta.validation.Valid;
@@ -12,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/topics/info")

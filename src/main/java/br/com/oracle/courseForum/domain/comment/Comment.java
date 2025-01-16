@@ -3,7 +3,6 @@ package br.com.oracle.courseForum.domain.comment;
 import br.com.oracle.courseForum.domain.topic.Topic;
 import br.com.oracle.courseForum.domain.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -59,6 +58,4 @@ public class Comment {
                 ", was the solution=" + resolve +
                 '}';
     }
-
-    public boolean getResolve() {return resolve;}
 }

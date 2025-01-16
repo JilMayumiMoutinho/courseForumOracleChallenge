@@ -1,6 +1,5 @@
 package br.com.oracle.courseForum.domain.topic;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
