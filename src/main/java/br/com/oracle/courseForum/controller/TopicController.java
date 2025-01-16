@@ -1,9 +1,8 @@
 package br.com.oracle.courseForum.controller;
 
-import br.com.oracle.courseForum.domain.topic.TopicCreationDTO;
-import br.com.oracle.courseForum.domain.topic.TopicDetails;
-import br.com.oracle.courseForum.domain.topic.TopicRepository;
-import br.com.oracle.courseForum.domain.topic.TopicService;
+import br.com.oracle.courseForum.domain.comment.CommentDetails;
+import br.com.oracle.courseForum.domain.comment.CommentRepository;
+import br.com.oracle.courseForum.domain.topic.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/topics/info")
 public class TopicController {
@@ -22,6 +23,9 @@ public class TopicController {
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @PostMapping("/create")
     @Transactional
@@ -32,8 +36,43 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TopicDetails>> getTopics(@PageableDefault(size = 10, sort = {"creation_date"}) Pageable pageable) {
+    public ResponseEntity<Page<TopicDetails>> getTopicsPagination(@PageableDefault(size = 10, sort = {"creation_date"}) Pageable pageable) {
         var topicsPage = topicRepository.findAllJoiningAuthorAndCourse(pageable);//.map(TopicDetails::new);
         return ResponseEntity.ok(topicsPage);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getTopic(@PathVariable Long id){
+        var topic = topicRepository.getReferenceById(id);
+        var comments = commentRepository.findAllByTopicId(id);
+        var topicWithComment = new TopicWithCommentDetails(topic, comments);
+
+        return ResponseEntity.ok(topicWithComment);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity updateTopic(@RequestBody @Valid TopicUpdateDTO topicData, @PathVariable Long id){
+        var topic = topicService.updateTopic(topicData);
+        return ResponseEntity.ok(topic);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deleteTopic(@PathVariable Long id) {
+        var topic = topicRepository.getReferenceById(id);
+        topicRepository.delete(topic);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/solved/{id}")
+    @Transactional
+    public ResponseEntity solveTopic(@PathVariable Long id) {
+        var topic = topicRepository.getReferenceById(id);
+        topic.resolveTopic();
+        topicRepository.save(topic);
+
+        return ResponseEntity.noContent().build();
     }
 }

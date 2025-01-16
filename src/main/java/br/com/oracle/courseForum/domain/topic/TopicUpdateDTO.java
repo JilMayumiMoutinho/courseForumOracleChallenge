@@ -1,10 +1,11 @@
 package br.com.oracle.courseForum.domain.topic;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record TopicCreationDTO (
+public record TopicUpdateDTO(
+        @NotNull
+        Long id,
         @NotBlank(message = "Title is required")
         String title,
         @NotBlank(message = "Message is required")

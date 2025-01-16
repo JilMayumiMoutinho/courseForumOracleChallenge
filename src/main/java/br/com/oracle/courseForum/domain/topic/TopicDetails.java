@@ -21,9 +21,9 @@ public record TopicDetails(
                 this.title = title;
                 this.message = message;
                 this.creation_date = creation_date;
+                this.status = status;
                 this.authorName = authorName;
                 this.courseName = courseName;
-                this.status = status;
         }
 
         public Long getId() {

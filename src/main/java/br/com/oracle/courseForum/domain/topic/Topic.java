@@ -38,12 +38,17 @@ public class Topic {
         this.creation_date = LocalDateTime.now();
         this.title = topicData.title();
         this.message = topicData.message();
-        this.status = true;
+        this.status = true; //Open
     }
 
-    /*public void setAsResolved() {
-        this.status = false;
-    }*/
+    public void updateTopic(TopicUpdateDTO data) {
+        this.title = data.title();
+        this.message = data.message();
+    }
+
+    public void resolveTopic() {
+        this.status = false; //close
+    }
 
     @Override
     public String toString() {
