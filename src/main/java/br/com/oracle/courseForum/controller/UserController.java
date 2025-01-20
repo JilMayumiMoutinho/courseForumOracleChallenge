@@ -1,6 +1,7 @@
 package br.com.oracle.courseForum.controller;
 
 import br.com.oracle.courseForum.domain.user.*;
+import br.com.oracle.courseForum.infra.security.TokenDetailDTO;
 import br.com.oracle.courseForum.infra.security.TokenServiceAPI;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,14 @@ public class UserController {
     @Autowired
     private TokenServiceAPI tokenService;
 
+    @Autowired
+    private UserAuthService userAuthService;
+
     @PostMapping
     @Transactional
     public ResponseEntity signUpUser(@RequestBody @Valid UserCreationDTO data, UriComponentsBuilder uriBuilder) {
-        var user = new User(data);
+        var encryptedPassword = userAuthService.encrytPassword(data.password());
+        var user = new User(data, encryptedPassword);
         repository.save(user);
         var location = uriBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(location).body(new UserDetailDAO(user.getName(), user.getId()));
@@ -41,9 +46,10 @@ public class UserController {
             var token = new UsernamePasswordAuthenticationToken(loginData.email(), loginData.password());
             var auth = manager.authenticate(token);
             var tokenJWT = tokenService.createToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(tokenJWT);
+            return ResponseEntity.ok(new TokenDetailDTO(tokenJWT));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
+

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/topics/info")
+@RequestMapping("/topics")
 public class TopicController {
     @Autowired
     private TopicRepository topicRepository;
